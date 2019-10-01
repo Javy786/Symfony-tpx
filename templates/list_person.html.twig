@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+{% block title %}
+    {{ nom }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
+
+{% block body %}
+    <h2 class="text-center">Liste de Personnes</h2>
+    <ul class="list-group">
+
+        {%  for person in per %}
+            <li class="list-group-item">
+                {{ person.nom | upper ~' '~person.prenom ~' '~person.login ~' '~person.mdp ~' '~person.email ~' '~person.genre}}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <form action="{{ path("create_per") }}" method="post">
+        <div class="form-group">
+            <label for="">Nom</label>
+            <input type="text" placeholder="Nom" class="form-control" name="nom">
+            <label for="">Prenom</label>
+            <input type="text" placeholder="Prenom" class="form-control" name="prenom">
+            <label for="">Pseudo</label>
+            <input type="text" placeholder="Login" class="form-control" name="login">
+            <label for="">Mot de passe</label>
+            <input type="text" placeholder="Password" class="form-control" name="mdp">
+            <label for="">Email</label>
+            <input type="text" placeholder="Email" class="form-control" name="email">
+            <div class="custom-control custom-radio">
+                <input class="custom-control-input" id="male" type="radio" value="m" name="genre">
+                <label class="custom-control-label" for="male">Homme</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input class="custom-control-input" id="female" type="radio" value="f" name="genre">
+                <label class="custom-control-label" for="female">Female</label>
+            </div>
+            <button type="submit">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+    </form>
+{% endblock %}

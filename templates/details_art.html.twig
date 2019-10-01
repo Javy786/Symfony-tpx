@@ -1,0 +1,72 @@
+{% extends "base.html.twig" %}
+{% block title %}
+    {{ nom }} {{ details.libelle | upper }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
+
+{% block body %}
+    <h2 class="text-center">Details de Article {{ details.libelle | upper }} </h2>
+    <table class="table table-bordered table-striped mt-5">
+        <thead class="thead-dark">
+            <tr>
+                <th>Libellé</th>
+                <th>Prix Unitaire</th>
+                <th>Quantité</th>
+                <th>Statut</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tr>
+            <td>{{ details.libelle | upper }}</td>
+            <td>{{ details.pu }}</td>
+            <td>{{ details.quantite }}</td>
+            <td>{{ details.statut | upper }}</td>
+            <td>
+                <a href=" {{ path('suppression', {'id_art' : details.id }) }} ">
+                    <button type="button">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </a>
+                <!--<a href=" {{ path('modify', {'id_art' : details.id }) }} ">
+                    <button type="button">
+                        <i class="far fa-edit"></i>
+                    </button>
+                </a>-->
+            </td>
+        </tr>
+    </table>
+
+    <a class="btn btn-info" href="{{ path("art") }}">Retour</a>
+
+    <form action="{{ path('modify', {'id_art' : details.id }) }}" method="post">
+        <div class="form-group mt-5">
+            <label>Libellé</label>
+            <input class="form-control" type="text" placeholder="libellé" value="{% if details.libelle is defined %} {{ details.libelle }} {% endif %}" name="libelle">
+            <label for="">Prix Unitaire</label>
+            <input class="form-control" type="number" placeholder="prix" value="{{ details.pu }}" name="pu">
+            <label for="">Quantité</label>
+            <input class="form-control" type="number" placeholder="quantité" value="{{ details.quantite }}" name="qty">
+
+            <label for="">Statut</label>
+            <div class="custom-control custom-radio">
+                <input class="custom-control-input" id="occasion" type="radio" value="occassion" name="status">
+                <label class="custom-control-label" for="occasion">Occassion</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input class="custom-control-input" id="neuf" type="radio" value="neuf" name="status">
+                <label class="custom-control-label" for="neuf">Neuf</label>
+            </div>
+            <br>
+
+                <button type="submit">
+                    <i class="far fa-edit"></i>
+                </button>
+            </a>
+        </div>
+    </form>
+
+{% endblock %}

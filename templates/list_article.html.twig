@@ -1,0 +1,56 @@
+{% extends "base.html.twig" %}
+{% block title %}
+    {{ nom }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
+
+{% block body %}
+    <h2 class="text-center">Liste de Articles</h2>
+    <ul class="list-group">
+
+        {% for article in art %}
+            <li class="list-group-item text-center">
+
+                <!--It is commented{{ article.libelle | upper ~' '~article.pu ~' '~article.quantite ~' '~article.statut }}-->
+
+                <a href="{{ path("detail", {"id_art" : article.id }) }}">
+                    {{ article.libelle | upper }}
+                </a>
+            </li>
+        {% endfor %}
+
+
+    </ul>
+    <br><br>
+     <!-- It is commeneted {{ dump(art) }}-->
+
+    <form action="{{ path('create_art') }}" method="post">
+        <div class="form-group">
+            <label>Libellé</label>
+            <input class="form-control" type="text" placeholder="libellé" name="libelle">
+            <label for="">Prix Unitaire</label>
+            <input class="form-control" type="number" placeholder="prix" name="pu">
+            <label for="">Quantité</label>
+            <input class="form-control" type="number" placeholder="quantité" name="qty">
+
+            <label for="">Statut</label>
+            <div class="custom-control custom-radio">
+                <input class="custom-control-input" id="occasion" type="radio" value="oc" name="status">
+                <label class="custom-control-label" for="occasion">Occassion</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input class="custom-control-input" id="neuf" type="radio" value="nf" name="status">
+                <label class="custom-control-label" for="neuf">Neuf</label>
+            </div>
+            <br>
+            <button type="submit">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+    </form>
+
+{% endblock %}
